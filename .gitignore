@@ -1,0 +1,24 @@
+# ルートは原則除外し、公開用ファイルだけ許可
+/*
+!/.gitignore
+!/index.html
+!/privacy.html
+!/.nojekyll
+!/css/
+!/img/
+
+# CSS
+/css/*
+!/css/reset.css
+!/css/style.css
+
+# サイトで使用する画像
+/img/*
+!/img/logo-header.png
+!/img/logo-footer.png
+!/img/favicon-512.png
+!/img/hero.jpg
+!/img/about-01.jpg
+!/img/about-02.jpg
+!/img/access.jpg
+!/img/sns-instagram.png

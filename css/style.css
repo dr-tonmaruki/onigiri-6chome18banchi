@@ -1,0 +1,1854 @@
+/*
+  ======================================================================
+  小規模店舗向け 1ページWebテンプレート
+  ======================================================================
+
+  基本方針：
+  ・HTML / CSS中心の軽量な1ページサイト
+  ・PC / スマートフォン対応
+  ・案件ごとに不要な部品を削除して使う「全部入り」寄りの構成
+  ・色はCSS変数を差し替えて業種ごとに変更する
+  ・初期配色は業種を限定しにくい、落ち着いたグリーン系
+
+  CSS構成：
+  1. CSS変数
+  2. 共通ルール
+  3. セクション固有ルール
+  4. スマホ用ルール
+*/
+
+:root {
+  --color-bg: #FFFFFF;
+  --color-bg-sub: #F7F5EF;
+  --color-card: #ffffff;
+
+  --color-primary: #86501C;
+  --color-primary-dark: #6A3907;
+
+  --color-secondary: #8A621B;
+  --color-secondary-soft: #EAD9B3;
+
+  --color-text: #30271F;
+  --color-text-sub: #65584B;
+
+  --color-line: #D9C8A8;
+}
+
+
+/*
+      ======================================================================
+      1. 共通ルール
+      ======================================================================
+    */
+
+html {
+  /*
+        Headerのページ内リンクを押した時、
+        一瞬で飛ぶのではなく滑らかにスクロールする。
+
+        JavaScript不要。
+        CSSだけでできる小さな演出。
+      */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+
+  line-height: 1.75;
+  color: var(--color-text);
+
+  /*
+        body = サイト全体の基本背景。
+        各sectionでは、後から変更しやすいように
+        backgroundをあえて個別にも明示する。
+      */
+  /*
+        カード化したsectionの外側に見える「台紙」色。
+        section内部の白/くすみ淡色との差を出すため、
+        bodyは少し濃いめのくすみ淡色にする。
+      */
+  background: #FFFFFF;
+}
+
+a {
+  color: inherit;
+}
+
+/*
+      サイト全体の共通外枠。
+
+      今回の打ち合わせで、
+      2カラムの余裕を優先して max-width:1100px に統一。
+
+      重要：
+      「外枠が1100px」だからといって、
+      文章を1100pxいっぱいまで読ませるわけではない。
+
+      文章には別途 max-width を設ける。
+    */
+.container {
+  width: 100%;
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/*
+      各通常セクションの共通上下余白。
+
+      まず共通値を決め、
+      Heroなど特別扱いしたい場所だけ個別上書きする。
+
+      「共通ルール + 例外は明示」
+      という方針。
+    */
+.section {
+  /*
+        section自体を少し内側へ入れて、
+        body背景の上に浮かぶ大きなカードとして見せる。
+
+        max-width:1180px
+        → 中の .container(1100px) より少し広く、
+          section自身の余白や影が見える幅。
+
+        margin:24px auto
+        → 上下に24pxの間隔、
+          左右は中央寄せ。
+
+        border-radius
+        → 角丸。
+
+        box-shadow
+        → ごく薄い影。
+          「カード化」はするが、
+          アプリUIっぽくなりすぎない程度に抑える。
+
+        overflow:hidden
+        → section背景や中身が角丸の外へはみ出さないようにする。
+      */
+  max-width: 1180px;
+  margin: 24px auto;
+
+  padding-top: 72px;
+  padding-bottom: 72px;
+
+  /*
+        ページ内リンクでこのsectionへ飛んだ時、
+        stickyヘッダーの裏にH2が隠れないよう
+        スクロール停止位置を少し下へずらす。
+
+        普通のレイアウト余白には影響しない。
+      */
+  scroll-margin-top: 96px;
+
+  border-radius: 10px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+  overflow: hidden;
+}
+
+/*
+      ======================================================================
+      見出し階層
+      ======================================================================
+
+      h1 = ページ全体の主題 → Heroに1個
+      h2 = 各セクション見出し
+      h3 = セクション内の小見出し
+
+      見た目だけでなくHTMLの意味も揃える。
+    */
+
+.section-title {
+  position: relative;
+
+  margin: 0 0 18px;
+
+  padding-bottom: 14px;
+
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  line-height: 1.3;
+}
+
+/*
+      セクション見出し下のサブカラーライン。
+
+      サブカラーを強く出しすぎず、
+      「実店舗ロゴのサブカラーを連想させる程度」の控えめな装飾。
+    */
+.section-title::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  /*
+        56pxから少し長めの76pxへ。
+        見出しに対して存在感を出しつつ、
+        「帯」になりすぎない長さ。
+      */
+  width: 76px;
+  height: 4px;
+
+  background: var(--color-secondary);
+}
+
+.section-lead {
+  max-width: 760px;
+
+  margin: 0 0 36px;
+
+  color: var(--color-text-sub);
+}
+
+/*
+      ======================================================================
+      2. Header
+      ======================================================================
+
+      PCでは横一列：
+
+      [LOGO] [Navigation] [ご予約・お問い合わせ]
+
+      Header全体は sticky。
+      スクロールしても上端へ残る。
+
+      fixed と違って、
+      元のレイアウト上の場所を保持したまま貼り付くため、
+      今回は扱いやすい sticky を採用。
+    */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: var(--color-primary-dark);
+  color: #fff;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.header-inner {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+.site-logo {
+  /*
+        店名／文字ロゴ。
+        初期テンプレートでは本文と同じシステムフォントを使う。
+        正式ロゴやブランド書体がある案件だけ個別に変更する。
+      */
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+
+  color: #fff;
+  text-decoration: none;
+
+  white-space: nowrap;
+}
+
+.site-logo:hover {
+  opacity: 0.9;
+}
+
+/*
+      nav-list の直接の子は li。
+
+      覚え方：
+      Flex / GridのDNA鑑定は「直接の親」を見る。
+
+      PCでは ul をFlex親にして
+      liを横並びにする。
+    */
+.nav-list {
+  display: flex;
+  align-items: center;
+
+  gap: 24px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nav-list a {
+  display: block;
+
+  padding: 8px 0;
+
+  color: #fff;
+  text-decoration: none;
+
+  font-size: 0.95rem;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/*
+      Headerの「電話で予約する」は
+      通常ナビより目的を強くしたCTA。
+
+      初期テンプレートではメインのグリーンを使う。
+
+      href は #contact ではなく mailto:。
+      件名も最初から「ご予約・お問い合わせについて」と入る。
+
+      一般問い合わせメールとは役割を分ける。
+    */
+.header-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 8px 16px;
+
+  background: var(--color-primary);
+  color: #fff;
+
+  text-decoration: none;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/*
+      ======================================================================
+      3. Hero
+      ======================================================================
+
+      Heroはページの最上部で印象を作る場所。
+
+      構成：
+      MV画像
+      h1
+      リード文
+      CTA「メニュー・料金を見る」
+
+      Hero下の余白は通常sectionより少し多め。
+      これは「例外を個別に明示」する例でもある。
+    */
+
+.hero {
+  /*
+        Heroも今回は一度カード化して比較する。
+
+        Header / Footer は全幅のまま。
+        Hero〜Contactまでをbody背景の上に浮かせる。
+
+        後から全幅へ戻したい場合は、
+        max-width / margin / border-radius / box-shadow
+        を削除すればよい。
+      */
+  max-width: 1180px;
+  margin: 24px auto;
+
+  padding-top: 36px;
+  padding-bottom: 96px;
+
+  background: var(--color-bg-sub);
+
+  border-radius: 10px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+  overflow: hidden;
+}
+
+/*
+      親 = 額縁
+      子img = 写真
+
+      PCでは16:9の額縁。
+    */
+.hero-visual {
+  aspect-ratio: 16 / 9;
+
+  overflow: hidden;
+
+  background: #ddd;
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-text {
+  max-width: 780px;
+
+  padding-top: 36px;
+}
+
+/*
+      Hero内のh1は、見た目の主役ではなく「このページが何のサイトか」を
+      文書構造として明示する役割。
+      小さめ・控えめに見せ、キャッチコピーとは役割を分ける。
+    */
+.hero-title {
+  margin: 0 0 10px;
+
+  color: var(--color-secondary);
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+
+/*
+      見た目上のHero主役はキャッチコピー。
+      h1ではなくpだが、CSSで大きく見せる。
+      HTMLの見出し階層と、視覚上の強弱は別に考える。
+    */
+.hero-catch {
+  margin: 0 0 18px;
+
+  color: var(--color-text);
+  font-size: clamp(2.15rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+}
+
+.hero-description {
+  margin: 0 0 28px;
+
+  color: var(--color-text-sub);
+  font-size: 1.05rem;
+}
+
+/*
+      Hero CTAは通常の濃いメインカラー。
+
+      「ご予約・お問い合わせ」のような最重要CTAだけメインカラー、
+      「メニュー・料金を見る」のような通常CTAは濃いメインカラー。
+
+      色に優先順位を持たせる。
+    */
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding: 10px 20px;
+
+  background: var(--color-primary-dark);
+  color: #fff;
+
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/*
+      ======================================================================
+      4. Service / Menu
+      ======================================================================
+
+      セクション背景は個別指定。
+      今はbodyと同系色でも、あえて明示しておく。
+
+      後でここだけ別色へ変える時に見つけやすい。
+    */
+
+#menu {
+  background: var(--color-bg-sub);
+}
+
+/*
+      外側 = Grid
+      内側 = Flex
+
+      外側Grid：
+      メニューアイテムそのものを2列に配置。
+
+      内側Flex：
+      各アイテムの「商品名 / 価格」を左右へ配置。
+    */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px 64px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid var(--color-line);
+}
+
+.menu-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-name-main {
+  display: block;
+}
+
+.menu-detail {
+  display: block;
+
+  margin-top: 2px;
+
+  color: var(--color-text-sub);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.menu-label {
+  color: var(--color-primary-dark);
+  font-size: 0.82rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.menu-price {
+  flex-shrink: 0;
+
+  padding-top: 1px;
+
+  white-space: nowrap;
+
+  text-align: right;
+  font-weight: 700;
+
+  /*
+        対応フォントなら数字を等幅化。
+        価格や表の日付などを揃えやすい。
+      */
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+      ======================================================================
+      5. About / お店について
+      ======================================================================
+    */
+
+#about {
+  background: var(--color-bg);
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+
+  gap: 44px;
+
+  margin-bottom: 56px;
+}
+
+.about-row:last-child {
+  margin-bottom: 0;
+}
+
+/*
+      HTML順は毎回
+      画像 → テキスト
+
+      PCで2段目だけ見た目を反転する。
+      DOM順は変更しない。
+    */
+.about-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.about-visual,
+.about-text {
+  flex: 1 1 0;
+
+  /*
+        Flexアイテムへの「縮小許可証」。
+
+        初期状態ではFlexアイテムは
+        中身が入らなくなるほど縮みたがらない。
+
+        min-width:0 で
+        「必要なら中身より狭くなってよい」
+        と許可する。
+      */
+  min-width: 0;
+}
+
+.about-visual {
+  aspect-ratio: 4 / 3;
+
+  overflow: hidden;
+
+  background: #ddd;
+}
+
+.about-visual img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-text h3 {
+  margin: 0 0 8px;
+
+  font-size: 1.35rem;
+  line-height: 1.4;
+}
+
+.about-text p {
+  margin: 0 0 24px;
+  color: var(--color-text-sub);
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+/*
+      ======================================================================
+      6. 店舗情報 / Map
+      ======================================================================
+    */
+
+#access {
+  background: var(--color-bg);
+}
+
+.info-layout {
+  display: flex;
+
+  gap: 44px;
+
+  /*
+        PC：flex-direction の初期値は row。
+
+        rowでは
+        主軸 = 横
+        交差軸 = 縦
+
+        align-items:stretch は交差軸方向、
+        つまり「高さ」を揃える方向へ働く。
+
+        左の情報が高くなれば
+        右のMap箱も同じ高さまで伸びる。
+      */
+/* 現在の右カラムは写真のみ。地図は2カラムの外、Access末尾へ配置する。 */
+  align-items: stretch;
+}
+
+.info-text,
+.access-visuals {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.info-list {
+  margin: 0;
+}
+
+.info-list dt {
+  margin-top: 22px;
+
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.info-list dt:first-child {
+  margin-top: 0;
+}
+
+.info-list dd {
+  margin: 6px 0 0;
+
+  color: var(--color-text-sub);
+}
+
+.location-list {
+  margin: 8px 0 0;
+  padding-left: 1.4em;
+}
+
+.location-list li {
+  margin-bottom: 4px;
+}
+
+/*
+      複数拠点・出店場所・対応地域など、
+      通常のdlとは分けて見せたい補助情報。
+      固定店舗で不要ならHTML側のブロックごと削除する。
+    */
+.location-block {
+  margin-top: 28px;
+}
+
+.info-subtitle {
+  margin: 0 0 8px;
+
+  color: var(--color-primary-dark);
+  font-size: 1rem;
+}
+
+.sns-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 46px;
+
+  margin-top: 24px;
+  padding: 9px 18px;
+
+  background: var(--color-primary-dark);
+  color: #fff;
+
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/*
+      Map側。
+
+      今回は右カラムにMapと外観写真を縦積みするため、
+      Mapには最低高さを持たせる。
+    */
+/* 現在の地図は末尾に全幅で表示し、下部のAccess専用指定で高さを明示する。 */
+.map-box {
+  min-height: 360px;
+
+  overflow: hidden;
+
+  background: #eee;
+  border: 1px solid var(--color-line);
+}
+
+.map-box iframe {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+
+  border: 0;
+}
+
+/*
+      テンプレ初期状態のMap用プレースホルダー。
+      実案件ではiframeへ差し替える。
+    */
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  color: var(--color-text-sub);
+  background: var(--color-bg-sub);
+  border: 1px dashed var(--color-secondary);
+
+  text-align: center;
+}
+
+/*
+      ======================================================================
+      7. Contact / SNS
+      ======================================================================
+
+      基本構成：
+
+      ・主CTA = 電話 + Gmail
+      ・補助導線 = LINE / Instagram / その他SNS
+      ・問い合わせフォームは原則として持たない
+      ・SNS投稿をWebへ埋め込まず、リンクだけ置く
+
+      不要な連絡手段・SNSはHTML側で要素ごと削除する。
+    */
+
+#contact {
+  background: var(--color-bg-sub);
+}
+
+.contact-box {
+  padding: 48px 32px;
+
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+
+  text-align: center;
+}
+
+.contact-box .section-title::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.contact-lead {
+  max-width: 680px;
+
+  margin: 0 auto;
+
+  color: var(--color-text-sub);
+}
+
+.contact-example {
+  max-width: 680px;
+
+  margin: 22px auto 0;
+
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/*
+      主CTA。
+
+      PCでは電話 + Gmailを横並び。
+      スマートフォンでは縦並びへ切り替える。
+    */
+.contact-actions {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  gap: 16px;
+
+  margin-top: 32px;
+}
+
+.contact-button {
+  display: inline-flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 360px;
+  min-width: 0;
+  min-height: 64px;
+
+  padding: 11px 20px;
+
+  border: 1px solid var(--color-primary-dark);
+
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.contact-button.tel {
+  background: var(--color-primary);
+  color: #fff;
+
+  border-color: var(--color-primary);
+}
+
+.contact-button.mail {
+  background: #fff;
+  color: var(--color-primary-dark);
+}
+
+.contact-button:hover {
+  opacity: 0.88;
+}
+
+.sns-link:hover {
+  background: var(--color-secondary-soft);
+}
+
+.contact-button-label {
+  font-size: 0.9rem;
+}
+
+.contact-phone {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact-mail {
+  margin-top: 2px;
+
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+.contact-note {
+  position: relative;
+
+  margin: 24px 0 0;
+  padding-top: 14px;
+
+  color: var(--color-text-sub);
+  font-size: 0.9rem;
+}
+
+.contact-note::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 42px;
+  height: 1px;
+
+  background: var(--color-line);
+  transform: translateX(-50%);
+}
+
+/*
+      SNSは主CTAより一段弱い補助導線として見せる。
+      日々の更新先へ送る役割なので、電話 / Gmailより控えめにする。
+    */
+.sns-area {
+  max-width: 720px;
+
+  margin: 36px auto 0;
+  padding-top: 28px;
+
+  border-top: 1px solid var(--color-line);
+}
+
+.sns-title {
+  margin: 0 0 6px;
+
+  font-size: 1.1rem;
+}
+
+.sns-lead {
+  margin: 0;
+
+  color: var(--color-text-sub);
+  font-size: 0.92rem;
+}
+
+.sns-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 18px;
+}
+
+.sns-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+  min-height: 52px;
+
+  padding: 8px 18px;
+
+  background: var(--color-bg-sub);
+  color: var(--color-primary-dark);
+
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/*
+      SNS公式アイコン。
+
+      テンプレではPNGを標準採用。
+      SVGへ差し替える場合も、このクラスのサイズ指定を流用できる。
+
+      LINE公式アイコンはブランドガイドライン上、
+      小さくしすぎないよう注意する。
+    */
+.sns-icon {
+  display: block;
+
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+  object-fit: contain;
+}
+
+/*
+      ======================================================================
+      美容室版で追加した小パーツ
+      ======================================================================
+    */
+
+/*
+      画像完成前でもレイアウトだけ確認できる仮枠。
+      本番画像を入れたら、この要素自体を img に置き換える予定。
+    */
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--color-text-sub);
+  background: linear-gradient(135deg, var(--color-bg-sub), #fff);
+  border: 1px dashed var(--color-secondary-soft);
+
+  text-align: center;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.menu-note {
+  margin: 28px 0 0;
+
+  color: var(--color-text-sub);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.menu-note-sub {
+  margin-top: 14px;
+}
+
+.about-quote {
+  padding-left: 1em;
+
+  border-left: 3px solid var(--color-secondary-soft);
+}
+
+.shop-name {
+  margin: 0 0 22px;
+
+  color: var(--color-primary-dark);
+  font-size: 1.45rem;
+}
+
+/*
+      店舗情報では、必要に応じて日本語名を主役にし、
+      英字表記・ブランド名などを補助的に併記する。
+
+      実案件では店舗の正式表記に合わせて使い分ける。
+    */
+.shop-name-sub {
+  display: inline-block;
+
+  margin-left: 0.45em;
+
+  color: var(--color-secondary);
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.info-list a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.access-note {
+  margin: 28px 0 0;
+
+  color: var(--color-text-sub);
+}
+
+/*
+      外観写真とキャプションを figure でひとまとまりにする。
+
+      PCの2カラム時でも、スマホの1カラム時でも、
+      「淡色のひさしと看板が目印です。」が
+      必ず外観写真の説明として直下に付いてくる。
+
+      見た目の位置関係だけでなく、
+      HTMLの文書構造としても画像と説明文の関係を明確にする。
+    */
+.store-photo-figure {
+  margin: 0;
+}
+
+.store-photo-caption {
+  margin: 10px 0 0;
+
+  color: var(--color-primary-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/*
+      店舗情報の右側は、
+
+      [Google Map]
+      [実店舗外観]
+
+      を縦に積む。
+    */
+/* 現在のaccess-visualsは写真1枚用。地図は別のaccess-mapに置く。 */
+.access-visuals {
+  flex: 1 1 0;
+  min-width: 0;
+
+  display: grid;
+  grid-template-rows: minmax(300px, 1fr) auto;
+  gap: 18px;
+}
+
+.store-photo {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.store-photo img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+
+
+
+/*
+      ======================================================================
+      8. Footer
+      ======================================================================
+
+      Footerは情報を詰め込みすぎない。
+
+      ・店名
+      ・プライバシーポリシー
+      ・copyright
+
+      のみ。
+
+      Headerと同じ濃いメインカラー系で、
+      ページ全体を最後に締める。
+    */
+
+.site-footer {
+  padding: 30px 20px;
+
+  background: var(--color-primary-dark);
+  color: #fff;
+
+  text-align: center;
+}
+
+.footer-name {
+  margin: 0 0 8px;
+
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.footer-nav {
+  margin: 0 0 8px;
+}
+
+.footer-nav a {
+  color: #fff;
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.copyright {
+  margin: 0;
+
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/*
+      ======================================================================
+      9. スマホ用ブレークポイント
+      ======================================================================
+
+      基本ブレークポイントは max-width:700px に統一。
+
+      今回は
+      「iPadだから768px」
+      「Androidタブレットだから○○px」
+      という端末名基準にはしない。
+
+      原則：
+
+      「そのレイアウトが苦しくなる幅で切る」
+
+      ただし管理しやすさのため、
+      まず700pxを標準として統一。
+
+      後で実機 / DevTools確認をして、
+      本当に必要なブロックだけ例外を追加する。
+    */
+
+@media (max-width: 700px) {
+  /*
+        PCより左右余白を少し縮小。
+      */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /*
+        スマホは縦に長くなるので
+        セクション上下余白も少し減らす。
+      */
+  .section {
+    /*
+          スマホでもカード感は残すが、
+          左右の余白を広く取りすぎない。
+
+          width:calc(...)
+          → body背景を左右8pxずつ見せる。
+        */
+    width: calc(100% - 16px);
+    margin: 8px auto;
+
+    padding-top: 52px;
+    padding-bottom: 52px;
+
+    /*
+          スマホHeaderは
+          ロゴ + 2×2 nav + CTA でPCより高いため、
+          アンカー到着位置も大きめにずらす。
+        */
+    scroll-margin-top: 210px;
+
+    border-radius: 8px;
+  }
+
+  /* ------------------------------------------------------
+         Header：スマホ
+         ------------------------------------------------------
+
+         PCではstickyだが、
+         スマホではHeader全体が高くなるので static に戻す。
+
+         画面上部をHeaderが1/3近く占領する問題を避ける。
+      */
+
+  /*
+        スマホでも今回は sticky を維持。
+
+        2×2 nav + 1列CTA にしたことで
+        Headerの高さが比較的コンパクトに収まるため、
+        利便性を優先して上部固定を残す。
+
+        縦の短い端末で邪魔なら、
+        後から position:static をここに追加すればよい。
+      */
+
+  .header-inner {
+    display: block;
+
+    min-height: 0;
+
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  /*
+        スマホHeader：
+
+        [       LOGO       ]
+
+        [メニュー] [お店について]
+        [店舗情報] [お問い合わせ]
+
+        [        電話で予約する        ]
+
+        という構成。
+      */
+
+  .site-logo {
+    display: block;
+
+    margin-bottom: 14px;
+
+    text-align: center;
+  }
+
+  /*
+        PCではFlexだったnavを、
+        スマホでは2列Gridへ切り替える。
+
+        displayは同じ要素でも
+        ブレークポイントごとに変更できる。
+      */
+  .nav-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .nav-list a {
+    padding: 9px 8px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    text-align: center;
+  }
+
+  .header-cta {
+    display: flex;
+
+    width: 100%;
+
+    margin-top: 10px;
+  }
+
+  /* ------------------------------------------------------
+         Hero：スマホ
+         ------------------------------------------------------ */
+
+  .hero {
+    width: calc(100% - 16px);
+    margin: 8px auto;
+
+    padding-top: 16px;
+    padding-bottom: 72px;
+
+    border-radius: 8px;
+  }
+
+  /*
+        PC 16:9
+        ↓
+        スマホ 4:3
+
+        スマホでは横幅が狭いため、
+        4:3にして高さを確保しつつ、PC画像からのトリミング差を抑える。
+      */
+  .hero-visual {
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-visual img {
+    object-position: 22% center;
+  }
+
+  .hero-text {
+    padding-top: 28px;
+  }
+
+  .hero-title {
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-catch {
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+  }
+
+  /* ------------------------------------------------------
+         Service / Menu：スマホ
+         ------------------------------------------------------
+
+         2列Grid
+         ↓
+         1列Grid
+      */
+
+  .menu-grid {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+  /* ------------------------------------------------------
+         About：スマホ
+         ------------------------------------------------------
+
+         PC：
+         画像 | テキスト
+         テキスト | 画像
+
+         スマホ：
+         画像
+         テキスト
+
+         画像
+         テキスト
+
+         HTML順は変えない。
+      */
+
+  .about-row,
+  .about-row.reverse {
+    flex-direction: column;
+    align-items: stretch;
+
+    gap: 22px;
+
+    margin-bottom: 44px;
+  }
+
+  /*
+        PCの flex:1 1 0 を解除。
+
+        columnになると主軸が縦へ変わるので、
+        flex-basis:0 が高さ方向へ効き、
+        以前の実習では画像枠が潰れた。
+
+        そこでスマホでは flex:none。
+      */
+  .about-visual,
+  .about-text {
+    flex: none;
+
+    width: 100%;
+  }
+
+  /* ------------------------------------------------------
+         店舗情報：スマホ
+         ------------------------------------------------------ */
+
+  .info-layout {
+    flex-direction: column;
+
+    gap: 26px;
+  }
+
+  .info-text,
+  .access-visuals {
+    flex: none;
+
+    width: 100%;
+  }
+
+  .access-visuals {
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+
+  /*
+        columnでは、
+
+        主軸 = 縦
+        交差軸 = 横
+
+        align-items:stretch は横方向へ効く。
+
+        Map高さはstretchでは決まらないため、
+        min-height:280px で明示。
+      */
+  .map-box,
+  .map-box iframe {
+    min-height: 280px;
+  }
+
+  /* ------------------------------------------------------
+         Contact：スマホ
+         ------------------------------------------------------ */
+
+  .contact-box {
+    padding: 34px 20px;
+  }
+
+  /*
+        この店舗では電話ボタン1つだけ。
+
+        スマホでは横幅いっぱいに広げ、
+        押しやすさを優先する。
+      */
+  .contact-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact-button {
+    width: 100%;
+    max-width: none;
+
+    min-width: 0;
+  }
+
+  .sns-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .sns-link {
+    width: 100%;
+  }
+}
+
+/*
+      ======================================================================
+      10. テンプレとしてのカスタマイズ場所
+      ======================================================================
+
+      後で別案件へ流用する時に、
+      まず見る場所：
+
+      【色】
+      :root の --color-...
+
+      【全体幅】
+      .container の max-width:1100px
+
+      【通常セクション余白】
+      .section の padding
+
+      【Heroだけの余白】
+      .hero の padding
+
+      【スマホ切替】
+      @media (max-width:700px)
+
+      【各セクション背景】
+      #menu
+      #about
+      #access
+      #contact
+
+      【見出しライン】
+      .section-title::after
+
+      【目立つCTA】
+      --color-primary
+
+
+      ======================================================================
+      11. 今回の合体版で確認すること
+      ======================================================================
+
+      まずDevToolsで、
+
+      1. 1100px以上
+         → 全体が最大1100pxで中央に収まるか
+
+      2. 800〜900px前後
+         → “タブレット専用” と考えず、
+           中間幅として自然に縮むか
+
+      3. 700px直前
+         → 2カラムがまだ苦しくないか
+
+      4. 700px以下
+         → Header / Menu / About / Map / Contact が
+           1カラムまたはスマホ用配置へ切り替わるか
+
+      5. 390px前後
+         → 実際のスマホ幅で文字・ボタンが窮屈でないか
+
+
+      ======================================================================
+      一言まとめ
+      ======================================================================
+
+      単体パーツ：
+      「そのブロックが動くか」
+
+      合体版：
+      「全体として気持ちよく流れるか」
+
+      ここから先は、
+      CSSの個別技術だけでなく
+
+      ・余白
+      ・色
+      ・視線
+      ・情報の強弱
+
+      という “サイト全体の設計” を見る段階。
+    */
+
+/*
+      ======================================================================
+      12. privacy.html 仮ページ
+      ======================================================================
+
+      今回は本文確定前なので最低限の読みやすさだけ用意。
+      本番ポリシーが確定したら必要に応じて調整する。
+    */
+
+.privacy-page {
+  min-height: 100vh;
+
+  padding: 72px 0;
+
+  background: var(--color-bg);
+}
+
+.privacy-page h1 {
+  margin: 0 0 28px;
+
+  color: var(--color-primary-dark);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.privacy-page p {
+  max-width: 760px;
+
+  margin: 0 0 24px;
+
+  color: var(--color-text-sub);
+}
+
+/* メニューの分類間隔と、出店一覧・電話案内の配置のみを調整する。 */
+.menu-group + .menu-group {
+  margin-top: 36px;
+}
+
+.menu-group h3 {
+  margin: 0 0 12px;
+}
+
+#access .location-block {
+  margin-top: 0;
+}
+
+#access .info-list {
+  margin-top: 28px;
+}
+
+#access .access-visuals[hidden] {
+  display: none;
+}
+
+.contact-phone-group {
+  flex: 1 1 0;
+  max-width: 360px;
+  min-width: 0;
+}
+
+.contact-phone-group .contact-button {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .contact-phone-group {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.contact-actions > .contact-button.mail {
+  align-self: flex-start;
+}
+
+/* ロゴ画像は元の縦横比を維持し、電話アイコンは既存の文字色を使う。 */
+.site-logo {
+  display: block;
+  flex: 0 1 250px;
+  min-width: 120px;
+}
+
+.site-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.header-cta {
+  gap: 8px;
+}
+
+.header-phone-icon {
+  flex: 0 0 20px;
+}
+
+.footer-name img {
+  display: block;
+  width: 324px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 16px;
+}
+
+@media (max-width: 700px) {
+  .site-logo {
+    width: 280px;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 auto 14px;
+  }
+}
+
+/* 正式ロゴに合わせた配色と、分類見出し・問い合わせ案内の調整。 */
+:root {
+  --color-accent: #E60013;
+}
+
+.section-title::after {
+  background: var(--color-accent);
+}
+
+.menu-group h3 {
+  padding: 12px 16px;
+  background: #F0E6D2;
+  color: var(--color-primary-dark);
+}
+
+.location-list a,
+.access-note a {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-box {
+  background: transparent;
+  border: 0;
+}
+
+.contact-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.contact-phone-group,
+.contact-mail-group {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  padding: 0 24px;
+}
+
+.contact-mail-group {
+  border-left: 1px solid var(--color-line);
+}
+
+.contact-group-title {
+  margin: 0 0 16px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.contact-actions .contact-button {
+  width: 100%;
+  max-width: 360px;
+}
+
+.contact-actions .contact-note {
+  margin-top: 16px;
+  padding-top: 0;
+}
+
+.contact-actions .contact-note::before {
+  content: none;
+}
+
+@media (max-width: 700px) {
+  .contact-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-phone-group,
+  .contact-mail-group {
+    padding: 0;
+  }
+
+  .contact-mail-group {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-left: 0;
+    border-top: 1px solid var(--color-line);
+  }
+}
+
+/* 地図は保留のまま、既存のAccess画像枠を写真1枚用に表示する。 */
+#access .access-visuals {
+  grid-template-rows: auto;
+  align-content: start;
+}
+
+/* Access固有：上段の既存2カラムを維持し、一覧と地図を全幅で続ける。 */
+#access .info-list { margin-top: 0; }
+#access .location-block { margin-top: 36px; }
+#access .location-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-bottom: 12px;
+}
+/* 施設公式HPの文字リンクと区別し、地図操作を押しやすいボタン風リンクにする。 */
+#access .location-map-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-primary-dark);
+  background: var(--color-bg);
+  color: var(--color-primary-dark);
+  font: inherit;
+  text-decoration: none;
+}
+#access .location-map-button:hover { text-decoration: underline; }
+#access .location-map-button:focus-visible { outline: 2px solid var(--color-primary-dark); outline-offset: 3px; }
+/* 地図の高さを明示し、読み込み前後も全幅の領域を確保する。 */
+.access-map { margin-top: 28px; }
+.access-map-status { margin: 0 0 12px; font-weight: 700; }
+#access .access-map > .location-map-button { margin-bottom: 16px; }
+#access .map-box { height: 400px; min-height: 0; }
+#access .map-box iframe { width: 100%; height: 100%; min-height: 0; }
+/* 上段は既存の700px以下の縦積みを使い、地図の高さだけをスマホ向けにする。 */
+@media (max-width: 700px) {
+  #access .map-box { height: 320px; }
+}
+
+/* 一覧への戻り先が固定ヘッダーに隠れないよう、PCとスマホで到着位置を調整する。 */
+#location-list { scroll-margin-top: 96px; }
+#access-map > p:first-child { margin: 0 0 16px; }
+#access-map a[href="#location-list"] { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) {
+  #location-list { scroll-margin-top: 260px; }
+}
+
+/* MAP見出し行：左に見出し、右端に戻るリンクを置き、スマホでも重ならないよう折り返しを許可する。 */
+.access-map-heading {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.access-map-heading .info-subtitle { margin: 0; }
+.access-map-heading > a {
+  justify-self: end;
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+    練習・デモ用なので検索エンジンには出さない設定。
+    本番公開時は、必要に応じて削除する。
+  -->
+    <meta name="robots" content="noindex,nofollow" />
+
+    <title>6丁目18番地｜おにぎりキッチンカー</title>
+    <meta
+      name="description"
+      content="おにぎりキッチンカー「6丁目18番地」。さまざまな具材のおにぎりをご用意しています。病院や地域のイベントなどに出店。メニュー・税込価格、主な出店場所、お問い合わせ先をご案内します。"
+    />
+
+    <!--
+    CSSは2段構成。
+
+    reset.css
+    → ブラウザごとの初期スタイル差を整える土台。
+
+    style.css
+    → このサイト固有のレイアウト・色・装飾。
+
+    reset.css を先、style.css を後に読むことが重要。
+    後から読み込んだ style.css で必要な見た目を上書きする。
+  -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="512x512"
+      href="img/favicon-512.png"
+    />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--
+    favicon：
+    実案件で正式ロゴや店舗マークがある場合に設定する。
+    テンプレートでは特定店舗のfaviconを持たせない。
+
+    例：
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  -->
+
+    <!--
+    Webフォント：
+    テンプレート初期状態では外部Webフォントを使わない。
+    店舗ロゴやブランド表現に必要な場合のみ、案件ごとに追加する。
+  -->
+
+    <!--
+    OGPは次段階で追加予定。
+    デモ公開時は noindex のままでもよい。
+  --></head>
+
+  <body id="top">
+    <!-- ========================================================
+       Header
+       ======================================================== -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <!--
+          店名／ロゴ。
+          文字ロゴの場合は店舗名へ差し替える。
+          正式ロゴ画像を使う場合は、このa要素内をimgへ変更してよい。
+          1ページサイトではTOPへのリンクとして使用する。
+        -->
+        <a
+          class="site-logo"
+          href="#top"
+          aria-label="6丁目18番地：ページの先頭へ戻る"
+        >
+          <img
+            src="img/logo-header.png"
+            alt="6丁目18番地"
+            width="800"
+            height="106"
+          />
+        </a>
+
+        <!--
+          基本ナビゲーション。
+          案件に不要な項目は削除してよい。
+          項目名は業種に合わせて変更する。
+
+          SNSリンクを使用する標準テンプレでは「お問合せ・SNS」。
+          SNSを使用しない案件では「お問い合わせ」へ変更する。
+        -->
+        <nav aria-label="メインナビゲーション">
+          <ul class="nav-list">
+            <li><a href="#about">お店について</a></li>
+            <li><a href="#menu">メニュー</a></li>
+            <li><a href="#access">出店情報</a></li>
+            <li><a href="#contact">お問合せ・SNS</a></li>
+          </ul>
+        </nav>
+
+        <!--
+          Headerの主要CTA。
+          Headerは高さを増やしすぎないため、CTAは原則1つ。
+          基本は電話を想定。電話を使わない案件では #contact などへ変更する。
+
+          【差し替え】
+          電話番号：0000000000 → 実際の番号（ハイフンなし）
+          表示文言：業種に応じて「電話で問い合わせる」「電話で予約する」等へ変更
+        -->
+        <a class="header-cta" href="tel:07089664342">
+          <svg
+            class="header-phone-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.79a2 2 0 0 1-.45 2.11L8.09 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.33 1.83.56 2.79.69A2 2 0 0 1 22 16.92z"
+            />
+          </svg>
+          <span>電話する</span>
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!--
+        ============================================================
+        Hero / About 共通：文章設計の考え方
+        ============================================================
+
+        ヒアリングで得た情報を、すべて掲載する必要はない。
+        目的は情報量を増やすことではなく、
+        「その店にしかない固有情報」を1〜2個見つけ、
+        読み手の記憶に残る主役として使うこと。
+
+        具体的な事実やエピソードを優先し、
+        「地域密着」「丁寧」「安心」「アットホーム」など、
+        他店にも当てはまりやすい表現だけで埋めない。
+
+        ヒアリングでは材料を広く集め、
+        Web掲載時には省略・整理する勇気を持つ。
+
+        Hero     = 結論（この店は何者か）
+        About 01 = Hero深掘り（なぜ今の店になったのか）
+        About 02 = こだわり（仕事の内容・強み）
+        ============================================================
+      -->
+
+      <!-- ======================================================
+         Hero
+         ====================================================== -->
+      <section class="hero">
+        <div class="container">
+          <!--
+            HERO：結論（この店は何者か）
+
+            最初に見た人へ、
+            「何の店で、どんな特徴があるのか」を短く伝える場所。
+
+            ヒアリングで確認すること：
+            ・店名 / 業種 / 地域は？
+            ・創業年や営業年数はアピール材料になる？
+            ・この店を一言で表すと？
+            ・一番強い特徴は？
+            ・主なお客様はどんな人？
+            ・初めての人に最初に覚えてほしいことは？
+
+            すべてを入れる必要はない。
+            回答の中から最も強い固有情報を1つ程度選び、
+            キャッチコピーや説明文の中心にする。
+
+            Hero画像：
+            PCでは16:9、スマホでは4:3程度にトリミングされる想定。
+            人物・商品・主役は中央寄せにする。
+          -->
+          <div class="hero-visual">
+            <img src="img/hero.jpg" alt="キッチンカーと巨大なおにぎり" width="1920" height="1081" />
+          </div>
+
+          <div class="hero-text">
+            <h1 class="hero-title">おにぎりキッチンカー「6丁目18番地」</h1>
+
+            <p class="hero-catch">みんな大好きおにぎり。</p>
+
+            <p class="hero-description">
+              「6丁目18番地」は、病院や地域のイベントなどに出店する、おにぎりのキッチンカーです。食べ比べて選んだ長狭米と、香りを大切にした海苔。具材もいろいろそろえ、一つひとつの形や見栄えにも気を配っています。いつもの具材から、ちょっと贅沢な組み合わせまで、お好みのおにぎりを見つけてください。
+            </p>
+
+            <a class="hero-button" href="#menu">メニューを見る</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================
+         About
+         ====================================================== -->
+      <section id="about" class="section">
+        <div class="container">
+          <h2 class="section-title">お店について</h2>
+
+          <div class="about-row">
+            <!--
+              ABOUT 01：Hero深掘り（なぜ今の店になったのか）
+
+              Heroで伝えた特徴について、
+              その背景・理由・歩みを説明する場所。
+
+              ヒアリングで確認すること：
+              ・この店を始めたきっかけは？
+              ・なぜこの地域で営業している？
+              ・長く続いている場合、その理由は？
+              ・どんなお客様に利用されてきた？
+              ・長年通っている常連客はいる？
+              ・印象に残っているお客様との話は？
+              ・店として大切にしてきたことは？
+
+              Heroと内容が重なってもよい。
+              Heroでは要約し、ここでは背景や理由を深掘りする。
+
+              文章量の目安：120〜180文字程度。
+              強いエピソードがある場合は、無理に情報を足さない。
+
+              画像：店内 / 店主・スタッフ / 店の背景が伝わるもの。
+              推奨比率 4:3。
+            -->
+            <div class="about-visual">
+              <img src="img/about-01.jpg" alt="キッチンカーで作業する店主" width="1600" height="1200" />
+            </div>
+
+            <div class="about-text">
+              <h3>憧れのキッチンカーでおにぎりを！</h3>
+              <p>
+                これまでいくつかの飲食店で経験を重ねるなかで、いつか自分のキッチンカーを持ちたいと思っていました。
+              </p>
+              <p>
+                子どもの手が離れ、自分の時間が増えたころ、夫から思いがけないプレゼントが。なんと、それは憧れていたキッチンカーでした！
+              </p>
+              <p>
+                こうして始まったお店の名前は「6丁目18番地」。6月18日の「おにぎり記念日」にちなんで名づけました。
+              </p>
+            </div>
+          </div>
+
+          <div class="about-row reverse">
+            <!--
+              ABOUT 02：こだわり（仕事の内容・強み）
+
+              商品・サービスそのものの特徴や、
+              仕事への考え方を紹介する場所。
+
+              ヒアリングで確認すること：
+              ・一番得意な商品 / サービスは？
+              ・他店ではあまりやっていないことは？
+              ・お客様によく褒められることは？
+              ・仕事で大切にしていることは？
+              ・絶対に妥協しないことは？
+              ・意外と知られていない特徴は？
+              ・どんな相談や要望に応えたい？
+
+              「丁寧」「安心」などの抽象表現だけで終わらせず、
+              具体的な商品・仕事・エピソードを1つ以上入れる。
+
+              文章量の目安：120〜180文字程度。
+
+              画像：商品 / 仕事道具 / 作業風景 / 提供風景など。
+              推奨比率 4:3。
+            -->
+            <div class="about-visual">
+              <img src="img/about-02.jpg" alt="お皿に並べた3種類のおにぎり" width="1600" height="1200" />
+            </div>
+
+            <div class="about-text">
+              <h3>お米のおいしさと、海苔の香りを大切に</h3>
+              <p>
+                お米は、いくつか試した中で一番おいしいと感じた、千葉県鴨川市の長狭米を選びました。
+              </p>
+              <p>
+                海苔は何よりも香りを大切にして選んでいます。その香りを楽しみに、毎週買いに来てくださるお客さまもいます。
+              </p>
+              <p>
+                手に取る前から「おいしそう」、手に取った瞬間には「まちがいない」。そんなおにぎりを目指しています。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================
+         Service / Menu
+         ====================================================== -->
+      <section id="menu" class="section">
+        <div class="container">
+          <!--
+            セクション見出し。
+            業種に合わせて変更する。
+
+            例：
+            ・飲食店　　　→ メニュー・料金
+            ・美容／施術　→ メニュー・料金
+            ・サービス業　→ サービス・料金
+            ・物販　　　　→ 商品・料金
+
+            id="menu" と .menu-* はテンプレ内部の共通名として使用。
+            表示文言だけ案件に合わせて変更すればよい。
+          -->
+          <h2 class="section-title">おにぎりメニュー</h2>
+
+          <!--
+            セクション導入文。
+            完成時の目安：70〜120文字程度。
+
+            ヒアリング内容が短い場合は、
+            ・どのような商品／サービスがあるか
+            ・料金が変わる条件
+            ・注文や依頼のしかた
+            ・初めての方へ伝えておきたいこと
+            などを補って文章化する。
+          -->
+          <p class="section-lead">
+            うめやツナマヨなどの定番から、さまざまな具材のおにぎりをご用意しています。<br />
+            店主のおすすめは、お客さまのリクエストから生まれた「イクラとさけ」。ちょっと贅沢な一品として、ご好評をいただいています。
+          </p>
+
+          <!--
+            サービス／メニュー一覧。
+            PCでは2列、スマートフォンでは1列。
+
+            基本は6項目前後を想定。
+            項目数は案件に合わせて増減してよい。
+
+            menu-detail：
+            内容、対象、セット内容、サイズ等の補足に使用。
+            不要な項目では削除してよい。
+
+            menu-label：
+            「人気」「要予約」「期間限定」など短い補助表示に使用。
+            不要なら削除する。
+          -->
+          <div class="menu-group">
+            <h3>人気の定番</h3>
+            <div class="menu-grid">
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">肉そぼろ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">まぐろこんぶ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">ツナマヨ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">さけ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">プルコギ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">うめ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">あさり</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">納豆</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">しば漬け</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">山椒ちりめん</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">生たらこ</span></span
+                >
+                <span class="menu-price">280円</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-group">
+            <h3>おすすめ</h3>
+            <div class="menu-grid">
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">釜めし（日替り）</span></span
+                >
+                <span class="menu-price">300円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">おかかチーズ</span></span
+                >
+                <span class="menu-price">300円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">辛子明太子</span></span
+                >
+                <span class="menu-price">350円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main"
+                    >サーモンクリームチーズ</span
+                  ></span
+                >
+                <span class="menu-price">350円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">明太クリームチーズ</span></span
+                >
+                <span class="menu-price">350円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">エビの天むす</span></span
+                >
+                <span class="menu-price">380円</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-group">
+            <h3>特選</h3>
+            <div class="menu-grid">
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">卵黄肉そぼろ</span></span
+                >
+                <span class="menu-price">500円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">うなぎ</span></span
+                >
+                <span class="menu-price">500円</span>
+              </div>
+              <div class="menu-item">
+                <span class="menu-name"
+                  ><span class="menu-name-main">イクラとさけ</span
+                  ><span class="menu-label">店主のおすすめ</span></span
+                >
+                <span class="menu-price">800円</span>
+              </div>
+            </div>
+          </div>
+
+          <!--
+            基本注記。
+            税込／税別、料金変動条件、サイズ差、出張費などを記載する。
+            不要なら削除してよい。
+          -->
+          <p class="menu-note">※表示価格はすべて税込です。</p>
+
+          <!--
+            追加注記。
+            割引、期間限定、注意事項など、通常注記とは分けて見せたい情報に使用。
+            不要ならこのp要素ごと削除する。
+          -->
+        </div>
+      </section>
+
+      <!-- ======================================================
+         Store information / Access
+         ====================================================== -->
+      <section id="access" class="section">
+        <div class="container">
+          <h2 class="section-title">出店情報</h2>
+
+          <!--
+            店舗情報は「実際に来店・利用するための現地情報」に集中させる。
+
+            標準で用意する項目：
+            ・店舗名
+            ・住所
+            ・電話番号
+            ・営業時間
+            ・定休日
+            ・駐車場
+            ・Google Map
+            ・外観写真
+
+            キッチンカーや複数拠点で営業する案件では、
+            location-list を使って主な出店場所・対応地域を追加する。
+            不要な項目は要素ごと削除してよい。
+
+            SNSはこのブロックには置かず、Contact側へまとめる。
+          -->
+          <!-- この案件では上段を営業情報と写真に限定し、一覧と地図は下へ配置する。電話番号はContactに集約する。 -->
+          <div class="info-layout">
+            <div class="info-text">
+              <!--
+                店舗名。
+                英字表記やブランド名が不要なら span.shop-name-sub は削除する。
+              -->
+              <h3 class="shop-name">6丁目18番地</h3>
+
+
+
+
+
+              <dl class="info-list">
+                <dt>営業時間</dt>
+                <dd>8:30〜16:00</dd>
+                <dt>定休日</dt>
+                <dd>月曜・木曜</dd>
+              </dl>
+            </div>
+
+            <div class="access-visuals">
+
+
+              <!--
+                STORE / ACCESS IMAGE
+
+                用途：店舗外観、入口、駐車位置、キッチンカー車両など
+                推奨比率：4:3
+                構図：初めて来る人が現地で照合しやすい写真を優先する
+
+                写真が不要な案件ではfigureごと削除してよい。
+              -->
+              <figure class="store-photo-figure">
+                <div class="store-photo">
+                  <img src="img/access.jpg" alt="6丁目18番地のキッチンカー外観" width="1600" height="1200" />
+                </div>
+              </figure>
+            </div>
+          </div>
+          <!-- 出店先一覧は2カラムの外に置き、施設HPと地図操作のリンクを分ける。 -->
+              <!--
+                複数拠点・出店場所・対応地域がある案件用。
+                固定店舗で不要なら、この見出しとulをまとめて削除する。
+
+                例：
+                ・毎週○曜日 ○○駅前
+                ・○○市 / △△市を中心に出張対応
+                ・イベント出店情報はInstagramで更新
+              -->
+              <div class="location-block">
+                <h3 id="location-list" class="info-subtitle">主な出店場所一覧</h3>
+                <ul class="location-list">
+                  <li><span><a href="https://ryokuyukai.jp/nagano/" target="_blank" rel="noopener noreferrer">永野病院</a>：火曜</span> <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B0%B8%E9%87%8E%E7%97%85%E9%99%A2%20%E5%8D%83%E8%91%89%E7%9C%8C%E5%B8%82%E5%8E%9F%E5%B8%82%E9%A6%AC%E7%AB%8B802-2" target="_blank" rel="noopener noreferrer" data-access-map="hospital" aria-controls="access-map-frame" aria-label="永野病院をMAPで見る">MAPで見る</a></li>
+                  <li><span><a href="https://satsuki-kai.or.jp/" target="_blank" rel="noopener noreferrer">さつき台病院</a>：水曜・第2／第4土曜</span> <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E8%A2%96%E3%82%B1%E6%B5%A6%E3%81%95%E3%81%A4%E3%81%8D%E5%8F%B0%E7%97%85%E9%99%A2%20%E5%8D%83%E8%91%89%E7%9C%8C%E8%A2%96%E3%82%B1%E6%B5%A6%E5%B8%82%E9%95%B7%E6%B5%A6%E9%A7%85%E5%89%8D5%E4%B8%81%E7%9B%AE21" target="_blank" rel="noopener noreferrer" data-access-map="satsuki" aria-controls="access-map-frame" aria-label="さつき台病院をMAPで見る">MAPで見る</a></li>
+                  <li><span><a href="https://www.yarita-hosp.or.jp/" target="_blank" rel="noopener noreferrer">鎗田病院</a>：金曜</span> <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E9%8E%97%E7%94%B0%E7%97%85%E9%99%A2%20%E5%8D%83%E8%91%89%E7%9C%8C%E5%B8%82%E5%8E%9F%E5%B8%82%E4%BA%94%E4%BA%95899" target="_blank" rel="noopener noreferrer" data-access-map="yarita" aria-controls="access-map-frame" aria-label="鎗田病院をMAPで見る">MAPで見る</a></li>
+                  <li><span><a href="https://ichihara.ario.jp/" target="_blank" rel="noopener noreferrer">アリオ市原</a>：不定期</span> <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%A2%E3%83%AA%E3%82%AA%E5%B8%82%E5%8E%9F%20%E5%8D%83%E8%91%89%E7%9C%8C%E5%B8%82%E5%8E%9F%E5%B8%82%E6%9B%B4%E7%B4%9A4%E4%B8%81%E7%9B%AE3%E7%95%AA2" target="_blank" rel="noopener noreferrer" data-access-map="ario" aria-controls="access-map-frame" aria-label="アリオ市原をMAPで見る">MAPで見る</a></li>
+                  <li><span><a href="https://map.cainz.com/detail/779/" target="_blank" rel="noopener noreferrer">カインズ市原店</a>：不定期</span> <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%AB%E3%82%A4%E3%83%B3%E3%82%BA%E5%B8%82%E5%8E%9F%E5%BA%97%20%E5%8D%83%E8%91%89%E7%9C%8C%E5%B8%82%E5%8E%9F%E5%B8%82%E6%9B%B4%E7%B4%9A3-1-1" target="_blank" rel="noopener noreferrer" data-access-map="cainz" aria-controls="access-map-frame" aria-label="カインズ市原店をMAPで見る">MAPで見る</a></li>
+                </ul>
+              <!--
+                アクセス補足。
+                最寄駅、目印、予約制、訪問前の注意などを80〜120文字程度で記述。
+                不要ならp要素ごと削除する。
+              -->
+              <p class="access-note">
+                ※出店予定は変更になる場合があります。最新情報は<a href="https://www.instagram.com/618.onigiri/" target="_blank" rel="noopener noreferrer">Instagram</a>をご確認ください。
+              </p>
+              </div>
+
+          <!--
+                GOOGLE MAP
+
+                実案件ではGoogle Mapsの「共有 → 地図を埋め込む」から
+                取得したiframeへ、このプレースホルダーを差し替える。
+
+                キッチンカーなど固定店舗がない場合は、
+                Map自体を削除するか、主な出店場所のMapへ変更してよい。
+              -->
+          <!-- 旧仕様の右カラム配置から変更し、地図をAccess末尾に全幅で配置する。 -->
+          <div id="access-map" class="access-map">
+            <!-- 既存のスムーズスクロールで出店先一覧へ戻る。MAP切り替えとは独立したページ内リンク。 -->
+            <!-- 見出しと戻るリンクを同じ行に置くための専用枠。狭い画面ではリンクの文字を折り返す。 -->
+            <div class="access-map-heading">
+              <h3 class="info-subtitle">出店先MAP</h3>
+              <a href="#location-list">↑ 出店場所一覧へ戻る</a>
+            </div>
+            <!-- 表示先の案内は地図の読み込み成功を判定するものではない。 -->
+            <p id="access-map-status" class="access-map-status" role="status" tabindex="-1">表示先：市原市周辺（広域地図）</p>
+            <a class="location-map-button" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8D%83%E8%91%89%E7%9C%8C%E5%B8%82%E5%8E%9F%E5%B8%82" target="_blank" rel="noopener noreferrer" data-access-map="area" aria-controls="access-map-frame">市原周辺に戻す</a>
+            <div class="map-box">
+              <iframe id="access-map-frame" title="市原市周辺の広域地図" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416319.32658209925!2d140.1361745!3d35.392985599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022a3865bbe8ae9%3A0xa4c9e6a9b143b311!2z5Y2D6JGJ55yM5biC5Y6f5biC!5e0!3m2!1sja!2sjp!4v1793264269748!5m2!1sja!2sjp" width="600" height="450" loading="lazy" allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            </div>
+            <p class="access-note">地図は施設の所在地を示します。キッチンカーの具体的な出店位置とは限りません。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================
+         Contact / SNS
+         ====================================================== -->
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="contact-box">
+            <h2 class="section-title">お問合せ・SNS</h2>
+
+            <!--
+              Contactの基本方針：
+
+              ・主な問い合わせ手段は「電話 + Gmail」
+              ・問い合わせフォームは原則として設置しない
+              ・店舗専用GoogleアカウントのGmailを使用する想定
+              ・同じGoogleアカウントをGBP / GA4 / Search Console等の管理にも使う
+              ・迷惑メール対策はGmail側へ寄せ、サイト側の保守負担を増やさない
+
+              SNSを使用しない案件では、
+              このセクション見出しとHeaderナビを「お問い合わせ」に変更する。
+            -->
+
+            <!--
+              導入文。
+              完成時の目安：60〜100文字程度。
+
+              問い合わせ可能な内容や、
+              電話・メールの使い分けを簡潔に案内する。
+            -->
+            <p class="contact-lead">
+              商品のお問い合わせや出店のご依頼は、お電話でお気軽にどうぞ。メールでもお問い合わせいただけます。最新の出店情報はInstagramをご確認ください。
+            </p>
+
+            <!--
+              問い合わせ例。
+              お客様が「何を聞いてよいか」を想像しやすくする補助文。
+              2〜3例程度を想定。不要ならp要素ごと削除してよい。
+            -->
+            <p class="contact-example">
+              商品について聞きたい<br />
+              出店を依頼したい
+            </p>
+
+            <!--
+              主CTA：電話 + Gmail
+
+              電話番号、Gmailアドレスを案件ごとに差し替える。
+              Gmailは店舗専用Googleアカウントを想定。
+
+              メール不要の案件では mail ボタンを削除する。
+              電話不要の案件では tel ボタンを削除する。
+            -->
+            <div class="contact-actions">
+              <div class="contact-phone-group">
+                <p class="contact-group-title">お取り置きはお電話にて承ります。</p>
+                <a
+                  class="contact-button tel"
+                  href="tel:07089664342"
+                  aria-describedby="phone-note"
+                >
+                  <span class="contact-button-label">電話でお問合せ</span>
+                  <span class="contact-phone">070-8966-4342</span>
+                </a>
+                <p id="phone-note" class="contact-note">
+                  お電話は営業時間内にお願いいたします。接客中など、電話に出られない場合がございます。
+                </p>
+              </div>
+              <div class="contact-mail-group">
+                <p class="contact-group-title">メールでのお問い合わせ</p>
+                <a
+                class="contact-button mail"
+                href="mailto:618.onigiri@gmail.com"
+                  aria-describedby="mail-note"
+              >
+                <span class="contact-button-label">メールでお問合せ</span>
+                <span class="contact-mail">618.onigiri@gmail.com</span>
+              </a>
+                <p id="mail-note" class="contact-note">※メールへの返信には、お時間をいただく場合がございます。</p>
+              </div>
+            </div>
+
+            <!--
+              電話・メールの補足。
+              営業時間、返信目安、休業日の対応などを記載する。
+              不要ならp要素ごと削除する。
+            -->
+
+            <!--
+              SNSリンク：
+
+              日々の更新はSNS、公式Webは基本情報を置く「母艦」として運用する想定。
+              Web側ではSNS投稿の埋め込みは行わず、原則としてリンクのみ。
+
+              LINE / Instagram / その他SNSを必要に応じて残す。
+              使用しないSNSはa要素ごと削除する。
+              SNSを一切使用しない案件では sns-area 全体を削除する。
+            -->
+            <div class="sns-area">
+              <h3 class="sns-title">SNS</h3>
+              <p class="sns-lead">
+                最新の出店情報や日々のお知らせは、Instagramでご案内しています。
+              </p>
+
+              <div class="sns-links">
+                <!--
+                  SNSアイコンは公式配布素材を使用。
+                  URLは案件ごとに差し替える。
+
+                  LINE / Instagram / X のうち、
+                  使用しないものはa要素ごと削除する。
+
+                  Xは淡色背景用として黒ロゴを標準使用。
+                  img/sns-x-white.png は濃色背景用の予備素材。
+                -->
+
+                <a
+                  class="sns-link"
+                  href="https://www.instagram.com/618.onigiri/"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Instagramを開く"
+                >
+                  <img
+                    class="sns-icon"
+                    src="img/sns-instagram.png"
+                    alt=""
+                    width="40"
+                    height="40"
+                  />
+                  <span>Instagram：618.onigiri</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================================
+       Footer
+       ======================================================== -->
+    <footer class="site-footer">
+      <!--
+        店舗名 / ロゴ表記。
+        実案件では【店舗名】へ差し替える。
+        画像ロゴを使う場合は、このp要素を画像へ置き換えてもよい。
+      -->
+      <p class="footer-name">
+        <img
+          src="img/logo-footer.png"
+          alt="おにぎりキッチンカー 6丁目18番地"
+          width="800"
+          height="163"
+        />
+      </p>
+
+      <!--
+        Footerは情報を詰め込みすぎず、
+        必要最低限の補助リンクだけ置く。
+
+        プライバシーポリシーが不要な案件では、
+        このfooter-nav自体を削除してよい。
+      -->
+      <p class="footer-nav">
+        <a href="privacy.html">プライバシーポリシー</a>
+      </p>
+
+      <!--
+        西暦と店舗名を案件ごとに差し替える。
+        JavaScriptで自動化せず、静的HTMLのままでも問題ない。
+      -->
+      <p class="copyright">&copy; 2026 6丁目18番地</p>
+    </footer>
+    <script>
+      // 検証済みの埋め込みURL6件をそのまま使い、1つのiframeだけを切り替える。
+      (() => {
+        const maps = {
+  "area": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d416319.32658209925!2d140.1361745!3d35.392985599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022a3865bbe8ae9%3A0xa4c9e6a9b143b311!2z5Y2D6JGJ55yM5biC5Y6f5biC!5e0!3m2!1sja!2sjp!4v1793264269748!5m2!1sja!2sjp",
+    "name": "市原市周辺（広域地図）",
+    "title": "市原市周辺の広域地図"
+  },
+  "hospital": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13005.125405469189!2d140.11567230000003!3d35.423059800000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022a233915e3c45%3A0xbcf85aee93a36ada!2z5rC46YeO55eF6Zmi!5e0!3m2!1sja!2sjp!4v1793264299270!5m2!1sja!2sjp",
+    "name": "永野病院",
+    "title": "永野病院の地図"
+  },
+  "satsuki": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3250.3654276063726!2d140.00377387552535!3d35.44574657266412!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60187570d334dd49%3A0x161889e91032926e!2z6KKW44Kx5rWm44GV44Gk44GN5Y-w55eF6Zmi!5e0!3m2!1sja!2sjp!4v1793265113594!5m2!1sja!2sjp",
+    "name": "さつき台病院",
+    "title": "さつき台病院の地図"
+  },
+  "yarita": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3247.7705319585684!2d140.0775024755284!3d35.50995187264299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60229e989b595cdb%3A0xcaec2a752ed3d453!2z6Y6X55Sw55eF6Zmi!5e0!3m2!1sja!2sjp!4v1793265135420!5m2!1sja!2sjp",
+    "name": "鎗田病院",
+    "title": "鎗田病院の地図"
+  },
+  "ario": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3247.8355255558363!2d140.09856647552832!3d35.50834497264354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022994ad051d14b%3A0xc20d2fd329165ece!2z44Ki44Oq44Kq5biC5Y6f!5e0!3m2!1sja!2sjp!4v1793265159755!5m2!1sja!2sjp",
+    "name": "アリオ市原",
+    "title": "アリオ市原の地図"
+  },
+  "cainz": {
+    "url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3247.915675010568!2d140.10110887552818!3d35.50636327264417!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022993598a5b925%3A0xb295f92986bf7b5f!2z44Kr44Kk44Oz44K6IOW4guWOn-W6lw!5e0!3m2!1sja!2sjp!4v1793265179773!5m2!1sja!2sjp",
+    "name": "カインズ市原店",
+    "title": "カインズ市原店の地図"
+  }
+};
+        const frame = document.getElementById('access-map-frame');
+        const region = document.getElementById('access-map');
+        const status = document.getElementById('access-map-status');
+        if (!frame || !region || !status) return;
+        // JavaScript無効時や修飾キー操作時は、hrefの通常のGoogleマップを開く。
+        document.querySelectorAll('[data-access-map]').forEach(link => link.addEventListener('click', event => {
+          if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+          const selected = maps[link.dataset.accessMap];
+          if (!selected) return;
+          event.preventDefault();
+          frame.title = selected.title;
+          if (frame.getAttribute('src') !== selected.url) frame.src = selected.url;
+          status.textContent = '表示先：' + selected.name;
+          // キーボードにも表示先を伝え、固定ヘッダーを避けて必要な場合だけ地図へスクロールする。
+          status.focus({ preventScroll: true });
+          const header = document.querySelector('.site-header');
+          const offset = (header ? header.getBoundingClientRect().height : 0) + 16;
+          const top = region.getBoundingClientRect().top;
+          if (top < offset || top > window.innerHeight * 0.55) {
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: Math.max(0, window.scrollY + top - offset), behavior: reduce ? 'instant' : 'smooth' });
+          }
+        }));
+      })();
+    </script>
+  </body>
+</html>
