@@ -1852,3 +1852,36 @@ a {
   text-align: right;
   overflow-wrap: anywhere;
 }
+
+/* 曜日を独立した要素にし、PCでは既存どおり施設名の横に表示する。 */
+#access .location-days::before {
+  content: "：";
+}
+
+/* スマホは左の施設名・曜日と右のMAP操作を2列に固定し、長い曜日だけを折り返す。 */
+@media (max-width: 700px) {
+  #access .location-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+  }
+
+  #access .location-list li > span {
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  #access .location-days {
+    display: block;
+  }
+
+  #access .location-days::before {
+    content: none;
+  }
+
+  #access .location-list .location-map-button {
+    justify-self: end;
+    white-space: nowrap;
+  }
+}
