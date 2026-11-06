@@ -22,3 +22,17 @@
 !/img/about-02.jpg
 !/img/access.jpg
 !/img/sns-instagram.png
+
+# 本番用生成スクリプトとHosting設定
+!/scripts/
+/scripts/*
+!/scripts/build-production.mjs
+!/firebase.json
+!/.firebaserc
+
+# 生成物・Firebaseキャッシュ・ログは登録しない
+/dist/
+/.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
